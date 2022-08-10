@@ -1,6 +1,6 @@
-import Checkout from "./checkout";
-import ProductHandler from "./products";
-import RuleHandler from "./rules";
+import Checkout from "./src/checkout";
+import ProductHandler from "./src/products";
+import RuleHandler from "./src/rules";
 
 const ruleHandler = new RuleHandler();
 const productHandler = new ProductHandler();

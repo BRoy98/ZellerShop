@@ -1,10 +1,5 @@
+import { Product } from "./products";
 import { Rule, RuleTypes } from "./rules";
-
-export interface Product {
-    sku: string;
-    name: string;
-    price: number;
-}
 
 class Checkout {
     products: Product[] = [];

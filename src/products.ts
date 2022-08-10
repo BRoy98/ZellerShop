@@ -1,5 +1,10 @@
 import Products from "../data/products";
-import { Product } from "./checkout";
+
+export interface Product {
+    sku: string;
+    name: string;
+    price: number;
+}
 
 class ProductHandler {
     findProducts(): Product[] {
