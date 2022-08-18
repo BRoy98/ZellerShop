@@ -1,4 +1,4 @@
-import { RuleTypes } from "../src/rules";
+import { RuleTypes } from "../src/rules/rules";
 
 export default [
     {

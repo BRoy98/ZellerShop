@@ -1,10 +1,13 @@
-import { Product } from "./products";
-import { Rule, RuleTypes } from "./rules";
+import { Product } from "../products/products";
+import RuleHandler, { Rule, RuleTypes } from "../rules/rules";
 
 class Checkout {
     products: Product[] = [];
+    ruleHandler: RuleHandler;
 
-    constructor(public readonly rules: Rule[]) {}
+    constructor(public readonly rules: Rule[]) {
+        this.ruleHandler = new RuleHandler();
+    }
 
     scan(product: Product) {
         this.products.push(product);
@@ -19,7 +22,7 @@ class Checkout {
 
             if (!itemData) {
                 productMap[product.sku] = {
-                    price: product.price,
+                    ...product,
                     count: 1,
                 };
             } else {
@@ -35,22 +38,7 @@ class Checkout {
             if (!rule) {
                 return total + itemData.price * itemData.count;
             }
-
-            switch (rule.type) {
-                case RuleTypes.ONE_LESS_PRICE:
-                    if (itemData.count >= rule.min_qty) {
-                        return total + itemData.price * (itemData.count - 1);
-                    }
-                    return total + itemData.price * itemData.count;
-
-                case RuleTypes.EACH_LESS_PRICE:
-                    if (itemData.count >= rule.min_qty) {
-                        return total + rule.each_price! * itemData.count;
-                    }
-                    return total + itemData.price * itemData.count;
-                default:
-                    return total;
-            }
+            return total + this.ruleHandler.calculatePrice(rule, itemData, itemData.count);
         }, 0);
     }
 }

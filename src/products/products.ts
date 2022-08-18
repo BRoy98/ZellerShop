@@ -1,4 +1,4 @@
-import Products from "../data/products";
+import Products from "../../data/products";
 
 export interface Product {
     sku: string;
